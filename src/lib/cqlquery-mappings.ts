@@ -243,7 +243,7 @@ export const criterionMap = new Map<string, { type: string; alias?: string[] }>(
     ["HO", { type: "medicationStatement", alias: ["Therapieart"] }], //Hormontherapie
     ["IM", { type: "medicationStatement", alias: ["Therapieart"] }], //Immuntherapie
     ["KM", { type: "medicationStatement", alias: ["Therapieart"] }], //Knochenmarktransplantation
-    ["59847-4", { type: "observation", alias: ["loinc", "morph"] }], //Morphologie
+    ["morphology", { type: "observation", alias: ["loinc", "morph"] }], //Morphologie
     ["year_of_diagnosis", { type: "conditionRangeDate" }],
     ["year_of_primary_diagnosis", { type: "primaryConditionRangeDate" }],
     ["sample_kind", { type: "specimen", alias: ["specimentype"] }],
