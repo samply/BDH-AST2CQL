@@ -13,6 +13,8 @@
   import catalogueProd from "$lib/catalog.json";
 
   import {
+  buildLibrary,
+    buildMeasure,
     getAst,
     setCatalogue,
     setQueryStore,
@@ -20,8 +22,6 @@
     type Catalogue,
     type QueryItem,
   } from "@samply/lens";
-
-  /* ------------------ setup ------------------ */
 
   const catalogue = catalogueProd as Catalogue;
   setCatalogue(catalogue);
@@ -32,8 +32,6 @@
 
   let errorMessage = "";
   let successMessage = "";
-
-  /* ------------------ helpers ------------------ */
 
   function parseQueryFromUrl(url: string): QueryItem[][] {
     const params = new URL(url).searchParams;
@@ -49,8 +47,6 @@
   function parseAstFromInput(ast: string): AstTopLayer {
     return JSON.parse(ast);
   }
-
-  /* ------------------ main action ------------------ */
 
   const handleButtonClick = () => {
     errorMessage = "";
@@ -75,12 +71,26 @@
         parsedAst = parseAstFromInput(inputAst);
       }
 
-      outputValue = translateAstToCql(
+      let cql = translateAstToCql(
         parsedAst,
         false,
         "DKTK_STRAT_DEF_IN_INITIAL_POPULATION",
         measures
       );
+
+        const lib = buildLibrary(cql);
+    const measure = buildMeasure(
+      lib.url,
+      measures.map((m) => m.measure),
+    );
+
+    outputValue = btoa(
+      JSON.stringify({
+        lang: "cql",
+        lib,
+        measure,
+      }),
+    );
 
       successMessage = "Conversion successful.";
     } catch (err) {
