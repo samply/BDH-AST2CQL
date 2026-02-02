@@ -180,6 +180,7 @@ export const cqltemplate = new Map<string, string>([
     "exists from [Observation: Code '69548-6' from {{A1}}] O\nwhere O.component.where(code.coding contains Code '{{K}}' from {{A1}}).value = '{{C}}'",
   ],
   ["procedure", "exists [Procedure: category in Code '{{K}}' from {{A1}}]"],
+  ["procedure2", "exists [Procedure: category in Code '{{C}}' from {{A1}}]"],
   [
     "procedureResidualstatus",
     "exists from [Procedure: category in Code 'OP' from {{A1}}] P\nwhere P.outcome.coding.code contains '{{C}}'",
@@ -187,6 +188,10 @@ export const cqltemplate = new Map<string, string>([
   [
     "medicationStatement",
     "exists [MedicationStatement: category in Code '{{K}}' from {{A1}}]",
+  ],
+  [
+    "medicationStatement2",
+    "exists [MedicationStatement: category in Code '{{C}}' from {{A1}}]",
   ],
   ["hasSpecimen", "exists [Specimen]"],
   ["specimen", "exists [Specimen: Code '{{C}}' from {{A1}}]"],
@@ -238,11 +243,16 @@ export const criterionMap = new Map<string, { type: string; alias?: string[] }>(
       },
     ], //Fernmetastasen
     ["OP", { type: "procedure", alias: ["Therapieart"] }], //Operation
+    ["procedure", { type: "procedure2", alias: ["Therapieart"] }], //Operation
     ["ST", { type: "procedure", alias: ["Therapieart"] }], //Strahlentherapie
     ["CH", { type: "medicationStatement", alias: ["Therapieart"] }], //Chemotherapie
     ["HO", { type: "medicationStatement", alias: ["Therapieart"] }], //Hormontherapie
     ["IM", { type: "medicationStatement", alias: ["Therapieart"] }], //Immuntherapie
     ["KM", { type: "medicationStatement", alias: ["Therapieart"] }], //Knochenmarktransplantation
+    [
+      "medicationStatement",
+      { type: "medicationStatement2", alias: ["Therapieart"] },
+    ], //Knochenmarktransplantation
     ["morphology", { type: "observation", alias: ["loinc", "morph"] }], //Morphologie
     ["year_of_diagnosis", { type: "conditionRangeDate" }],
     ["year_of_primary_diagnosis", { type: "primaryConditionRangeDate" }],

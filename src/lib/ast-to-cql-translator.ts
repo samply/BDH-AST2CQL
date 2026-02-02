@@ -16,8 +16,6 @@ export const translateAstToCql = (
   backendMeasures: string,
   measures: FhirMeasureItem[],
 ): string => {
-
-    console.log("test")
   const localMeasures: { key: string; cql: string }[] = [];
   measures.forEach((x) => {
     localMeasures.push({
@@ -266,8 +264,6 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
     criterion.key = criterion.value as string;
   }
 
-  console.log("lol")
-
   const myCriterion = criterionMap.get(criterion.key);
 
   if (myCriterion) {
@@ -285,8 +281,10 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
         case "observationMetastasis":
         case "observationMetastasisBodySite":
         case "procedure":
+        case "procedure2":
         case "procedureResidualstatus":
         case "medicationStatement":
+        case "medicationStatement2":
         case "specimen":
         case "hasSpecimen":
         case "Organization":
@@ -410,6 +408,8 @@ const getSingleton = (criterion: AstBottomLayerValue): string => {
         }
       }
     }
+  } else {
+    console.error("Key: " + criterion.key + " not found.")
   }
   return expression;
 };
